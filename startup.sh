@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# Update package list and install wget
 apt update
 apt install -y wget git build-essential
+
+# Continue with the rest of the script
 mkdir -p /workspace
 DEBIAN_FRONTEND=noninteractive apt-get install -y openssh-server python3-pip python3-venv
 mkdir -p ~/.ssh
@@ -68,7 +71,4 @@ export FLASK_APP=app.py
 export MODEL_PATH=/workspace/text-generation-webui/models/TheBloke/Llama-2-13B-GPTQ
 
 # Start the Flask web server
-flask run --host=0.0.0.0 --port=5000
-
-# Keep the container running
-sleep infinity
+flask run --host=0.0
