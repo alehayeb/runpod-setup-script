@@ -14,7 +14,9 @@ service ssh start
 # Clone the text-generation-webui repository
 mkdir -p /workspace
 cd /workspace
-git clone https://github.com/oobabooga/text-generation-webui.git
+if [ ! -d "text-generation-webui" ]; then
+  git clone https://github.com/oobabooga/text-generation-webui.git
+fi
 cd text-generation-webui
 
 # Set up Python virtual environment
@@ -26,14 +28,13 @@ pip install -U pip
 pip install -r requirements.txt
 
 # Install additional Python packages
-pip install flask flask-cors logging huggingface-hub transformers
+pip install flask flask-cors logging huggingface-hub transformers torch
 
 # Download and set up the model
-cd /workspace/text-generation-webui
 python download-model.py TheBloke/Llama-2-13B-GPTQ || echo "Download script not found, skipping model download step."
 
 # Flask app setup
-cat <<EOT >> app.py
+cat <<EOT > app.py
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import logging
@@ -74,3 +75,4 @@ flask run --host=0.0.0.0 --port=5000
 
 # Keep the container running
 sleep infinity
+
