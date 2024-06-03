@@ -27,7 +27,7 @@ pip install -U pip
 pip install -r requirements.txt
 
 # Install additional Python packages
-pip install flask flask-cors logging huggingface-hub
+pip install flask flask-cors logging huggingface-hub transformers
 
 # Download and set up the model
 cd /workspace/text-generation-webui
@@ -71,4 +71,7 @@ export FLASK_APP=app.py
 export MODEL_PATH=/workspace/text-generation-webui/models/TheBloke/Llama-2-13B-GPTQ
 
 # Start the Flask web server
-flask run --host=0.0
+flask run --host=0.0.0.0 --port=5000
+
+# Keep the container running
+sleep infinity
